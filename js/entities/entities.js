@@ -109,7 +109,24 @@ game.PlayerEntity = me.Entity.extend({
                 response.b.loseHealth();
             }
         }else if(response.b.type==='EnemyCreep'){
-            if(this.renderable.isCurrentAnimation("attack") && this.now - this.lastHit >= 1000){
+            var xdif = this.pos.x - response.b.pos.x;
+            var ydif = this.pos.y - response.b.pos.y;
+            
+            if (xdif>0){
+                this.pos.x = this.pos.x + 1;
+                if(this.facing==="left"){
+                this.body.vel.x = 0;
+            }
+             }else{
+                this.pos.x = this.pos.x - 1;
+                if(this.facing==="right"){
+                    this.body.vel.x = 0;
+                }
+            }
+            if(this.renderable.isCurrentAnimation("attack") && this.now - this.lastHit >= 1000
+                    && (Math.abs(ydif)  <=40) && 
+                    (((xdif>0) && this.facing==="left")) || ((xdif<0) && this.facing==="right")
+                    ){
                 this.lastHit = this.now;
                 response.b.loseHealth(1);
             }
@@ -130,7 +147,7 @@ game.PlayerBaseEntity = me.Entity.extend({
                 }
             }]);
         this.broken = false;
-        this.health = 10;
+        this.health = 100;
         this.alwaysUpdate = true;
         this.body.onCollision = this.onCollision.bind(this);
 
@@ -174,7 +191,7 @@ game.EnemyBaseEntity = me.Entity.extend({
                 }
             }]);
         this.broken = false;
-        this.health = 10;
+        this.health = 100;
         this.alwaysUpdate = true;
         this.body.onCollision = this.onCollision.bind(this);
 
@@ -216,7 +233,7 @@ game.EnemyCreep = me.Entity.extend({
                return (new me.Rect(0, 0, 32, 64)).toPolygon();
            }
        }]);
-   this.health = 10;
+   this.health = 100;
    this.alwaysUpdate = true;
    //this.attacking lets us know if the enemy is currently attacking
    this.attacking = false;
@@ -240,6 +257,7 @@ game.EnemyCreep = me.Entity.extend({
    },
    
    update: function(delta){
+       console.log(this.health); 
        if(this.health <= 0){
            me.game.world.removeChild(this);
        }
