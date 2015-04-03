@@ -12,7 +12,7 @@ var game = {
                 playerHealth: 10,
                 enemyCreepAttack: 10,
                 playerAttack: 1,
-                plyaerrAttackTimer: 1000,
+                playerAttackTimer: 1000,
                 enemycreepAttackTimer: 1000,
                 playerMoveSpeed: 5,
                 creepMoveSpeed:  5,
