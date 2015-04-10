@@ -46,6 +46,7 @@ game.PlayerEntity = me.Entity.extend({
         //Keeps track of which direction your character is  going   
         this.facing = "right";
         this.dead = false;  
+        this.attacking = false;
      },
      
      addAnimation: function(){
@@ -56,13 +57,25 @@ game.PlayerEntity = me.Entity.extend({
      
     update: function(delta) {
         this.now = new Date().getTime();
-        
-        if(this.health<= 0){
-            this.dead = true;
+        this.dead = checkIfDead();
+        this.checkKeyPressesAndMove();
+        this.setAnimation();
+        me.collision.check(this, true, this.collideHandler.bind(this), true);
+        this.body.update(delta);
+        this._super(me.Entity, "update", [delta]);
+        return true;
+    },
+    
+    checkIfDead: function(){
+             if(this.health<= 0){
+            return true;
           
         }
-        
-        if (me.input.isKeyPressed("right")) {
+          return false;
+    },
+    
+    checkKeyPressesAndMove: function(){
+       if (me.input.isKeyPressed("right")) {
             //adds to the position of my x by the velocity defined above in
             //setVelocity() and multiplying it by me.timer.tick.
             //me.timer.tick makes the movement look smooth
@@ -82,9 +95,11 @@ game.PlayerEntity = me.Entity.extend({
         if (me.input.isKeyPressed("jump")) {
             this.body.vel.y -= this.body.accel.y * me.timer.tick;
         }
-
-
-        if (me.input.isKeyPressed("attack")) {
+        this.attacking = me.input.isKeyPressed("attack");
+    },
+    
+    setAnimation: function(){
+       if (this.attacking) {
             if (!this.renderable.isCurrentAnimation("attack")) {
                 //Sets the current animation to attack and once that is over
                 //goes back to the idle animation
@@ -103,14 +118,7 @@ game.PlayerEntity = me.Entity.extend({
         } else if (!this.renderable.isCurrentAnimation("attack")) {
             this.renderable.setCurrentAnimation("idle");
         }
-
-
-        me.collision.check(this, true, this.collideHandler.bind(this), true);
-
-        this.body.update(delta);
-
-        this._super(me.Entity, "update", [delta]);
-        return true;
+  
     },
     
     loseHealth: function(damage){
@@ -119,7 +127,16 @@ game.PlayerEntity = me.Entity.extend({
     
     collideHandler: function(response) {
         if (response.b.type === 'EnemyBaseEntity') {
-            var ydif = this.pos.y - response.b.pos.y;
+            this.collideWithEnemyBase(response);
+        }else if(response.b.type==='EnemyCreep'){
+        this.collideWithEnemyCreep(response);
+            
+        
+        }
+    },
+    
+    collideWithEnemyBase: function(response){
+        var ydif = this.pos.y - response.b.pos.y;
             var xdif = this.pos.x - response.b.pos.x;
 
             console.log("xdif " + xdif + " ydif " + ydif);
@@ -148,7 +165,9 @@ game.PlayerEntity = me.Entity.extend({
                 
                 response.b.loseHealth(game.data.playerAttack);
             }
-        }else if(response.b.type==='EnemyCreep'){
+    }
+
+    collideWithEnemy: function(response){
             var xdif = this.pos.x - response.b.pos.x;
             var ydif = this.pos.y - response.b.pos.y;
             
@@ -171,7 +190,7 @@ game.PlayerEntity = me.Entity.extend({
                 response.b.loseHealth(game.data.playerAttack);
             }
         }
-    }
+
 });
 
 
