@@ -26,7 +26,7 @@ game.PlayerBaseEntity = me.Entity.extend({
         if(this.health<=0){
             //sets the building to be broken and make the player lose
             this.broken = true;
-            this.data.lose = false;
+            game.data.win = false;
             this.renderable.setCurrentAnimation("broken");
         }
         this.body.update(delta);

@@ -33,9 +33,10 @@
                 <script type="text/javascript" src="js/entities/GameManager.js"></script>
                 <script type="text/javascript" src="js/entities/EnemyCreep.js"></script>
 		<script type="text/javascript" src="js/entities/HUD.js"></script>
-
+                                                                                    
 		<script type="text/javascript" src="js/screens/title.js"></script>
 		<script type="text/javascript" src="js/screens/play.js"></script>
+                <script type="text/javascript" src="js/screens/spendExp.js"></script>
 		<!-- /build -->
 		<!-- Bootstrap & Mobile optimization tricks -->
 		<script type="text/javascript">
