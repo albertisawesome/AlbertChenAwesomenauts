@@ -14,7 +14,7 @@
                     },
                     
                     draw: function(renderer){
-                        this.font.draw(renderer.getContext(), "CONTINUE", this.pos.x, this.pos.y);
+                        this.font.draw(renderer.getContext(), "START A NEW GAME", this.pos.x, this.pos.y);
                        
                     },
                     
@@ -30,6 +30,7 @@
                         me.save.remove('exp3');
                         me.save.remove('exp4');
                         me.save.remove('exp5');
+                        me.save.add({exp: 0, exp1: 0, exp2: 0, exp3: 0, exp4: 0});
                         me.state.change(me.state.SPENDEXP);
                     }
                 
@@ -43,7 +44,7 @@
                     },
                     
                     draw: function(renderer){
-                        this.font.draw(renderer.getContext(), "START A NEW GAME", this.pos.x, this.pos.y);
+                        this.font.draw(renderer.getContext(), "CONTINUE", this.pos.x, this.pos.y);
                        
                     },
                     

@@ -9,7 +9,7 @@ var game = {
                 enemyBaseHealth: 1,
                 plyaerBaseHealth: 1,
                 enemyCreepHealth: 10,
-                playerHealth: 10,
+                playerHealth: 1,
                 enemyCreepAttack: 10,
                 playerAttack: 1,
                 playerAttackTimer: 1000,
