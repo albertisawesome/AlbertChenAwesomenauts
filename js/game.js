@@ -26,7 +26,8 @@ var game = {
                 exp3: 0,
                 exp4: 0,
                 exp5: 0,
-                win:  ""
+                win:  "", 
+                minimap: ""
                
 	},
 	
@@ -74,6 +75,7 @@ var game = {
                 me.pool.register("HeroDeathManager",  game.HeroDeathManager);
                 me.pool.register("HeroDeathManager",  game.HeroDeathManager);
                 me.pool.register("ExperienceManager",  game.ExperienceManager);
+                //me.pool.register("minimap", game.MiniMap, true);
             
                 me.state.set(me.state.MENU, new game.TitleScreen());
 		me.state.set(me.state.PLAY, new game.PlayScreen());

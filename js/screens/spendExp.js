@@ -32,7 +32,11 @@
             
               this.handler = me.event.subscribe(me.event.KEYDOWN, function (action, keyCode, edge){
                   if(action === "F1"){
-                      
+                      if(game.data.exp >= 10){
+                          game.data.exp1 += 1;
+                          game.data.exp -= 10;
+                          me.state.change(me.state.PLAY);
+                      }
                   }else  if(action === "F2"){
                       
                   }else  if(action === "F3"){
